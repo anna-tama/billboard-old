@@ -12,21 +12,29 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Configuración de la base de datos
-const dbConfig = {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT,
-    ssl: {
-        rejectUnauthorized: true
-    }
-};
-
+const dbConfig = process.env.MYSQL_ADDON_URI 
+    ? {
+        uri: process.env.MYSQL_ADDON_URI,
+        ssl: {
+            rejectUnauthorized: true
+        }
+      }
+    : {
+        host: process.env.MYSQL_ADDON_HOST,
+        user: process.env.MYSQL_ADDON_USER,
+        password: process.env.MYSQL_ADDON_PASSWORD,
+        database: process.env.MYSQL_ADDON_DB,
+        port: process.env.MYSQL_ADDON_PORT,
+        ssl: {
+            rejectUnauthorized: true
+        }
+      };
 // Crear conexión a la base de datos
 let pool;
 async function initDB() {
-    pool = mysql.createPool(dbConfig);
+    pool = process.env.MYSQL_ADDON_URI 
+        ? mysql.createPool(dbConfig.uri)
+        : mysql.createPool(dbConfig);
     
     // Crear tabla si no existe
     const createTableQuery = `
