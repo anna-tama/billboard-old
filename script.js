@@ -1,5 +1,14 @@
 const API_URL = 'http://localhost:3000/registros';
 
+const { JSDOM } = require('jsdom');
+const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>');
+global.document = dom.window.document;
+
+// Now `document` exists in Node.js
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('Mock DOM loaded!');
+});
+
 // Objeto principal de la aplicación
 const App = {
   init() {
@@ -120,4 +129,6 @@ const App = {
 };
 
 // Inicializar la aplicación cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => App.init());
+if (typeof document !== 'undefined') {
+  document.addEventListener('DOMContentLoaded', () => App.init());
+}
