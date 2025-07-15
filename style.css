@@ -1,0 +1,9 @@
+.eliminar {
+    margin-left: 10px;
+    color: red;
+    cursor: pointer;
+}
+
+li {
+    margin: 5px 0;
+}
