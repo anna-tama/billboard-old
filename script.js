@@ -1,5 +1,6 @@
 const API_URL = 'http://localhost:3000'; // Ajusta según tu configuración
 
+
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('registroForm');
     const listaRegistros = document.getElementById('listaRegistros');
